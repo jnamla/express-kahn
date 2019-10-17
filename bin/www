@@ -6,6 +6,7 @@
 const http = require('http');
 const config = require('../server/config')[process.env.NODE_ENV || 'development'];
 const app = require('../server/app')(config);
+const db = require('../server/database/db');
 
 // Helper functions
 
@@ -38,8 +39,15 @@ app.set('port', port);
  */
 const server = http.createServer(app);
 
+db.connect( config.database.dsn )
+  .then( () => {
+    console.log('Connected to MongoDB');
+    server.listen(port);
+  })
+  .catch((err) => {
+    console.log('Could not connect to the database');
+  });
 
-server.listen(port);
 server.on('listening', () => {
   const addr = server.address();
   const bind = typeof addr === 'string'
