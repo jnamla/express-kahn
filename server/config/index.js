@@ -13,6 +13,9 @@ module.exports = {
     database: {
       dsn: process.env.DEVELOPMENT_DB_DSN,
     },
+    auth: {
+      secret: process.env.DEV_SECRET
+    }
   },
   production: {
     sitename: 'Roux Meetups',
@@ -24,6 +27,9 @@ module.exports = {
     database: {
       dsn: process.env.PRODUCTION_DB_DSN,
     },
+    auth: {
+      secret: process.env.PROD_SECRET
+    }
   },
   test: {
     sitename: 'Roux Meetups [Test]',
@@ -35,5 +41,8 @@ module.exports = {
     database: {
       dsn: process.env.TEST_DB_DSN,
     },
+    auth: {
+      secret: process.env.TEST_SECRET
+    }
   },
 };

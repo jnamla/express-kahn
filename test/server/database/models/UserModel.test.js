@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 const chai = require('chai');
 chai.use(require('chai-as-promised'));
-const helper = require('../../helper');
+const helper = require('../../../helper');
 
 const { UserModel } = helper;
 const should = chai.should();

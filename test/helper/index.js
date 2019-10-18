@@ -9,14 +9,14 @@ let UserModel = null;
 
 try {
   // eslint-disable-next-line import/no-unresolved
-  db = require('../../server/lib/db');
+  db = require('../../server/database/db');
 } catch (err) {
   console.log('db ignored');
 }
 
 try {
   // eslint-disable-next-line import/no-unresolved
-  UserModel = require('../../server/models/UserModel');
+  UserModel = require('../../server/database/models/UserModel');
 } catch (err) {
   console.log('UserModel ignored');
 }
