@@ -7,6 +7,8 @@ const path = require('path');
 const createError = require('http-errors');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
+const auth = require('./lib/auth');
+
 const SpeakerService = require('./services/SpeakerService');
 const FeedbackService = require('./services/FeedbackService');
 
@@ -30,6 +32,10 @@ module.exports = (config) => {
     saveUninitialized: false,
     store: new MongoStore({mongooseConnection: mongoose.connection})
   }));
+
+  app.use(auth.initialize);
+  app.use(auth.session);
+  app.use(auth.setUser);
 
   app.use(bodyParser.urlencoded({ extended: true }));
 
