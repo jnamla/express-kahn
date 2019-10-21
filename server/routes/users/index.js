@@ -6,6 +6,11 @@ const router = express.Router();
 
 module.exports = () => {
   
+  router.get('/logout', (req, res) => {
+    req.logout();
+    return res.redirect('/');
+  });
+
   router.post('/login', passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/users/login?error=true'
