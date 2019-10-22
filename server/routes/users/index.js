@@ -1,13 +1,9 @@
 const express = require('express');
 const passport = require('passport');
 const UserModel = require('../../database/models/UserModel');
+const middlewares = require('../middlewares');
 
 const router = express.Router();
-
-function redirectIfLogged(req, res, next) {
-  if (req.user) return res.redirect('/users/account');
-  return next();
-}
 
 module.exports = () => {
   
@@ -16,7 +12,7 @@ module.exports = () => {
     return res.redirect('/');
   });
 
-  router.get('/login', redirectIfLogged, (req, res) => {
+  router.get('/login', middlewares.redirectIfLogged, (req, res) => {
     res.render('users/login', { error: req.query.error });
   });
 
@@ -25,9 +21,9 @@ module.exports = () => {
     failureRedirect: '/users/login?error=true'
   }));
 
-  router.get('/registration', redirectIfLogged, (req, res) => res.render('users/registration', { success: req.query.success }));
+  router.get('/registration', middlewares.redirectIfLogged, (req, res) => res.render('users/registration', { success: req.query.success }));
 
-  router.post('/registration', async (req, res, next) => {
+  router.post('/registration', middlewares.upload.single('avatar'), async (req, res, next) => {
     try {
       const user = new UserModel({
         username: req.body.username,
