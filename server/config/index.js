@@ -12,6 +12,11 @@ module.exports = {
     },
     database: {
       dsn: process.env.DEVELOPMENT_DB_DSN,
+      initOptions: {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true
+      }
     },
     auth: {
       secret: process.env.DEV_SECRET
@@ -26,6 +31,11 @@ module.exports = {
     },
     database: {
       dsn: process.env.PRODUCTION_DB_DSN,
+      initOptions: {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true
+      }
     },
     auth: {
       secret: process.env.PROD_SECRET
@@ -40,6 +50,11 @@ module.exports = {
     },
     database: {
       dsn: process.env.TEST_DB_DSN,
+      initOptions: {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true
+      }
     },
     auth: {
       secret: process.env.TEST_SECRET
