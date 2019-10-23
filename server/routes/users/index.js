@@ -52,8 +52,19 @@ module.exports = (params) => {
 
   router.get('/account',(req, res, next) => {
     if (req.user) return next();
-    return res.status(403).end();
+    return res.status(401).end();
   }, (req, res) => res.render('users/account', { user: req.user }));
+
+  router.get('/avatar/:filename', (req, res, next) => {
+    res.type('png');
+    return res.sendfile(avatars.filepath('req.params.filename'));
+  });
+
+  router.get('/avatartn/:filename', async (req, res, next) => {
+    res.type('png');
+    const tn = await avatars.thumbnail('req.params.filename');
+    return res.end(tn, 'binary');
+  });
 
   return router;
 };
