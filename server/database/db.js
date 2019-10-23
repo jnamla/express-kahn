@@ -1,9 +1,5 @@
 const mongoose = require('mongoose');
 
-const initializationOptions = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
+module.exports.connect = async (dsn, initOptions) => {
+    return mongoose.connect( dsn, initOptions );
 };
-
-module.exports.connect = async dsn => mongoose.connect( dsn, initializationOptions );
