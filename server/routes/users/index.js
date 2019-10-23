@@ -5,8 +5,9 @@ const middlewares = require('../middlewares');
 
 const router = express.Router();
 
-module.exports = () => {
+module.exports = (params) => {
   
+  const {avatars} = params;
   router.get('/logout', (req, res) => {
     req.logout();
     return res.redirect('/');
@@ -23,19 +24,28 @@ module.exports = () => {
 
   router.get('/registration', middlewares.redirectIfLogged, (req, res) => res.render('users/registration', { success: req.query.success }));
 
-  router.post('/registration', middlewares.upload.single('avatar'), async (req, res, next) => {
+  router.post('/registration',
+  middlewares.upload.single('avatar'), 
+  middlewares.handleAvatar(avatars),
+  async (req, res, next) => {
     try {
       const user = new UserModel({
         username: req.body.username,
         email: req.body.email,
         password: req.body.password
       });
-
+      if(req.file && req.file.storedFilename) {
+        user.avatar = req.file.storedFilename;
+      }
       const savedUser = await user.save();
 
       if (savedUser) return res.redirect('/users/registration?success=true');
       return next(new Error('Failed to save user.'));
     } catch (error) {
+
+      if(req.file && req.file.storedFilename) {
+
+      }
       return next(error);
     }
   });

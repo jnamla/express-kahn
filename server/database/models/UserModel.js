@@ -31,6 +31,9 @@ const UserSchema = mongoose.Schema({
         required: true,
         trim: true,
         minlength: 8,
+    },
+    avatar: {
+        type: String,
     }
 }, 
 {
