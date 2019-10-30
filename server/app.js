@@ -8,7 +8,7 @@ const routes = require('./routes');
 const SpeakerService = require('./services/SpeakerService');
 const FeedbackService = require('./services/FeedbackService');
 
-module.exports = (config) => {
+module.exports = (config, logger) => {
   const app = express();
   app.use(compression());
   
@@ -35,7 +35,7 @@ module.exports = (config) => {
     }
   });
 
-  app.use('/', routes({ speakers, feedback }));
+  app.use('/', routes({ speakers, feedback, logger }));
 
   // catch 404 and forward to error handler
   app.use((req, res, next) => {
