@@ -5,8 +5,11 @@
  */
 require('dotenv').config();
 const http = require('http');
+const cluster = require('cluster');
+const os = require('os');
 const config = require('../server/config')[process.env.NODE_ENV || 'development'];
 const db = require('../server/database/db');
+
 const logger = config.log();
 
 logger.stream = {
@@ -15,6 +18,8 @@ logger.stream = {
     logger.info(message);
   },
 };
+
+const numCPUs = os.cpus().length;
 
 const app = require('../server/app')(config, logger);
 
@@ -49,7 +54,17 @@ app.set('port', port);
  */
 const server = http.createServer(app);
 
-db.connect(config.database.dsn, (config.database.initOptions))
+if(cluster.isMaster) {
+  logger.info(`Master ${process.pid} is running.`);
+  for(let i = 0; i<numCPUs; i++) {
+    cluster.fork();
+  }
+  cluster.on('exit', (worker) => {
+    logger.fatal(`Worker ${worker.process.pid} just died.`);
+    cluster.fork();
+  });
+} else {
+  db.connect(config.database.dsn, (config.database.initOptions))
   .then( () => {
     logger.info('Connected to MongoDB');
     server.listen(port);
@@ -57,6 +72,7 @@ db.connect(config.database.dsn, (config.database.initOptions))
   .catch((err) => {
     logger.info('Could not connect to the database');
   });
+}
 
 server.on('listening', () => {
   const addr = server.address();

@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const mongoose = require('mongoose');
@@ -18,6 +19,7 @@ const AvatarService = require('./services/AvatarService');
 
 module.exports = (config, logger) => {
   const app = express();
+  app.use(helmet());
   app.use(morgan('combined', { stream: logger.stream }));
   app.use(compression());
   
