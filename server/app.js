@@ -3,6 +3,7 @@ const path = require('path');
 const createError = require('http-errors');
 const bodyParser = require('body-parser');
 const compression = require('compression');
+const morgan = require('morgan');
 
 const routes = require('./routes');
 const SpeakerService = require('./services/SpeakerService');
@@ -10,6 +11,7 @@ const FeedbackService = require('./services/FeedbackService');
 
 module.exports = (config, logger) => {
   const app = express();
+  app.use(morgan('combined', { stream: logger.stream }));
   app.use(compression());
   
   const speakers = new SpeakerService(config.data.speakers);
