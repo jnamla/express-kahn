@@ -11,24 +11,25 @@ try {
   // eslint-disable-next-line import/no-unresolved
   db = require('../../server/database/db');
 } catch (err) {
-  console.log('db ignored');
+  log.info('db ignored');
 }
 
 try {
   // eslint-disable-next-line import/no-unresolved
   UserModel = require('../../server/database/models/UserModel');
 } catch (err) {
-  console.log('UserModel ignored');
+  log.info('UserModel ignored');
 }
 
 try {
   // eslint-disable-next-line import/no-unresolved
   AvatarService = require('../../server/services/AvatarService');
 } catch (err) {
-  console.log('Avatars ignored');
+  log.info('Avatars ignored');
 }
 
 const config = require('../../server/config').test;
+const log = config.log();
 
 const fsReaddir = util.promisify(fs.readdir);
 const fsUnlink = util.promisify(fs.unlink);

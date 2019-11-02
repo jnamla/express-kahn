@@ -1,6 +1,7 @@
 require('dotenv').config();
-
 const path = require('path');
+
+const loggers = require('../utils/logger');
 
 module.exports = {
   development: {
@@ -20,7 +21,8 @@ module.exports = {
     },
     auth: {
       secret: process.env.DEV_SECRET
-    }
+    },
+    log: loggers.development
   },
   production: {
     sitename: 'Roux Meetups',
@@ -39,7 +41,8 @@ module.exports = {
     },
     auth: {
       secret: process.env.PROD_SECRET
-    }
+    },
+    log: loggers.production
   },
   test: {
     sitename: 'Roux Meetups [Test]',
@@ -58,6 +61,7 @@ module.exports = {
     },
     auth: {
       secret: process.env.TEST_SECRET
-    }
+    },
+    log: loggers.test
   },
 };

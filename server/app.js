@@ -6,14 +6,20 @@ const MongoStore = require('connect-mongo')(session);
 const path = require('path');
 const createError = require('http-errors');
 const bodyParser = require('body-parser');
+const compression = require('compression');
+const morgan = require('morgan');
+
 const routes = require('./routes');
 const auth = require('./lib/auth');
 
 const SpeakerService = require('./services/SpeakerService');
 const FeedbackService = require('./services/FeedbackService');
 
-module.exports = (config) => {
+module.exports = (config, logger) => {
   const app = express();
+  app.use(morgan('combined', { stream: logger.stream }));
+  app.use(compression());
+  
   const speakers = new SpeakerService(config.data.speakers);
   const feedback = new FeedbackService(config.data.feedback);
 
@@ -50,7 +56,7 @@ module.exports = (config) => {
     }
   });
 
-  app.use('/', routes({ speakers, feedback }));
+  app.use('/', routes({ speakers, feedback, logger }));
 
   // catch 404 and forward to error handler
   app.use((req, res, next) => {
