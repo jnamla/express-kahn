@@ -6,7 +6,6 @@
 require('dotenv').config();
 const http = require('http');
 const config = require('../server/config')[process.env.NODE_ENV || 'development'];
-const app = require('../server/app')(config);
 const db = require('../server/database/db');
 const logger = config.log();
 
@@ -50,13 +49,13 @@ app.set('port', port);
  */
 const server = http.createServer(app);
 
-db.connect(config.database.dsn, config.database.initializationOptions)
+db.connect(config.database.dsn, (config.database.initOptions))
   .then( () => {
-    console.log('Connected to MongoDB');
+    logger.info('Connected to MongoDB');
     server.listen(port);
   })
   .catch((err) => {
-    console.log('Could not connect to the database');
+    logger.info('Could not connect to the database');
   });
 
 server.on('listening', () => {
