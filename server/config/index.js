@@ -1,6 +1,7 @@
 require('dotenv').config();
-
 const path = require('path');
+
+const loggers = require('../utils/logger');
 
 module.exports = {
   development: {
@@ -13,6 +14,7 @@ module.exports = {
     database: {
       dsn: process.env.DEVELOPMENT_DB_DSN,
     },
+    log: loggers.development
   },
   production: {
     sitename: 'Roux Meetups',
@@ -24,6 +26,7 @@ module.exports = {
     database: {
       dsn: process.env.PRODUCTION_DB_DSN,
     },
+    log: loggers.production
   },
   test: {
     sitename: 'Roux Meetups [Test]',
@@ -35,5 +38,6 @@ module.exports = {
     database: {
       dsn: process.env.TEST_DB_DSN,
     },
+    log: loggers.test
   },
 };
