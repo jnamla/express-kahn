@@ -4,7 +4,10 @@
  * Module dependencies.
  */
 const http = require('http');
+const cluster = require('cluster');
+const os = require('os');
 const config = require('../server/config')[process.env.NODE_ENV || 'development'];
+
 const logger = config.log();
 
 logger.stream = {
@@ -13,6 +16,8 @@ logger.stream = {
     logger.info(message);
   },
 };
+
+const numCPUs = os.cpus().length;
 
 const app = require('../server/app')(config, logger);
 
@@ -47,8 +52,19 @@ app.set('port', port);
  */
 const server = http.createServer(app);
 
+if(cluster.isMaster) {
+  logger.info(`Master ${process.pid} is running.`);
+  for(let i = 0; i<numCPUs; i++) {
+    cluster.fork();
+  }
+  cluster.on('exit', (worker) => {
+    logger.fatal(`Worker ${worker.process.pid} just died.`);
+    cluster.fork();
+  });
+} else {
+  server.listen(port);
+}
 
-server.listen(port);
 server.on('listening', () => {
   const addr = server.address();
   const bind = typeof addr === 'string'
