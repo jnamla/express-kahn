@@ -19,7 +19,7 @@ logger.stream = {
   },
 };
 
-const numCPUs = os.cpus().length;
+const numCPUs = 1;//os.cpus().length;
 
 const app = require('../server/app')(config, logger);
 

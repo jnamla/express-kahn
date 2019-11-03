@@ -42,9 +42,8 @@ module.exports = (params) => {
       if (savedUser) return res.redirect('/users/registration?success=true');
       return next(new Error('Failed to save user.'));
     } catch (error) {
-
       if(req.file && req.file.storedFilename) {
-
+          await avatars.delete(req.file.storedFilename);
       }
       return next(error);
     }
@@ -61,9 +60,13 @@ module.exports = (params) => {
   });
 
   router.get('/avatartn/:filename', async (req, res, next) => {
-    res.type('png');
-    const tn = await avatars.thumbnail('req.params.filename');
-    return res.end(tn, 'binary');
+    try {
+      res.type('png');
+      const tn = await avatars.thumbnail(req.params.filename);
+      return res.end(tn, 'binary');
+    } catch (error) {
+      return res.status(500);
+    }
   });
 
   return router;
