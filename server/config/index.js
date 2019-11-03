@@ -15,8 +15,7 @@ module.exports = {
       dsn: process.env.DEVELOPMENT_DB_DSN,
       initOptions: {
         useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true
+        useUnifiedTopology: true
       }
     },
     auth: {
@@ -35,8 +34,7 @@ module.exports = {
       dsn: process.env.PRODUCTION_DB_DSN,
       initOptions: {
         useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true
+        useUnifiedTopology: true
       }
     },
     auth: {
@@ -55,8 +53,7 @@ module.exports = {
       dsn: process.env.TEST_DB_DSN,
       initOptions: {
         useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true
+        useUnifiedTopology: true
       }
     },
     auth: {
