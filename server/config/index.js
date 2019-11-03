@@ -13,6 +13,10 @@ module.exports = {
     },
     database: {
       dsn: process.env.DEVELOPMENT_DB_DSN,
+      initOptions: {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      },
     },
     log: loggers.development
   },
@@ -25,6 +29,10 @@ module.exports = {
     },
     database: {
       dsn: process.env.PRODUCTION_DB_DSN,
+      initOptions: {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      },
     },
     log: loggers.production
   },
@@ -37,6 +45,10 @@ module.exports = {
     },
     database: {
       dsn: process.env.TEST_DB_DSN,
+      initOptions: {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      },
     },
     log: loggers.test
   },

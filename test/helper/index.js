@@ -64,7 +64,7 @@ module.exports.validUser = {
 
 module.exports.before = async () => {
   if (db) {
-    await db.connect(config.database.dsn);
+    await db.connect(config.database.dsn, config.database.initOptions);
   }
   if (UserModel) {
     return UserModel.deleteMany({});

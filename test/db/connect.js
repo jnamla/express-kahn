@@ -23,17 +23,17 @@ describe('The DSN', () => {
 
 describe('The database', () => {
   it('development should be reachable', async () => {
-    const db = await MongoClient.connect(configDev.database.dsn, { useNewUrlParser: true });
+    const db = await MongoClient.connect(configDev.database.dsn, configDev.database.initOptions);
     expect(db).to.not.be.null;
     await db.close();
   });
   it('test should be reachable', async () => {
-    const db = await MongoClient.connect(configTest.database.dsn, { useNewUrlParser: true });
+    const db = await MongoClient.connect(configTest.database.dsn, configTest.database.initOptions);
     expect(db).to.not.be.null;
     await db.close();
   });
   it('production should be reachable', async () => {
-    const db = await MongoClient.connect(configProd.database.dsn, { useNewUrlParser: true });
+    const db = await MongoClient.connect(configProd.database.dsn, configProd.database.initOptions);
     expect(db).to.not.be.null;
     await db.close();
   });
