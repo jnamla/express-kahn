@@ -26,17 +26,14 @@ describe('The options to connect', () => {
   it('should be configured for development', async () => {
     expect(configDev.database.initOptions).to.have.own.property('useNewUrlParser');
     expect(configDev.database.initOptions).to.have.own.property('useUnifiedTopology');
-    expect(configDev.database.initOptions).to.have.own.property('useCreateIndex');
   });
   it('should be configured for production', async () => {
     expect(configProd.database.initOptions).to.have.own.property('useNewUrlParser');
     expect(configProd.database.initOptions).to.have.own.property('useUnifiedTopology');
-    expect(configProd.database.initOptions).to.have.own.property('useCreateIndex');
   });
   it('should be configured for testing', async () => {
     expect(configTest.database.initOptions).to.have.own.property('useNewUrlParser');
     expect(configTest.database.initOptions).to.have.own.property('useUnifiedTopology');
-    expect(configTest.database.initOptions).to.have.own.property('useCreateIndex');
   });
 });
 
