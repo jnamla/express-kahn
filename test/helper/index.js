@@ -7,29 +7,36 @@ let AvatarService = null;
 let db = null;
 let UserModel = null;
 
+const config = require('../../server/config').test;
+const logger = config.log();
+
+logger.stream = {
+  write: function(message, encoding) {
+    // use the 'info' log level so the output will be picked up by both transports (file and console)
+    logger.info(message);
+  },
+};
+
 try {
   // eslint-disable-next-line import/no-unresolved
   db = require('../../server/lib/db');
 } catch (err) {
-  log.info('db ignored');
+  logger.info('db ignored');
 }
 
 try {
   // eslint-disable-next-line import/no-unresolved
   UserModel = require('../../server/models/UserModel');
 } catch (err) {
-  log.info('UserModel ignored');
+  logger.info('UserModel ignored');
 }
 
 try {
   // eslint-disable-next-line import/no-unresolved
   AvatarService = require('../../server/services/AvatarService');
 } catch (err) {
-  log.info('Avatars ignored');
+  logger.info('Avatars ignored');
 }
-
-const config = require('../../server/config').test;
-const log = config.log();
 
 const fsReaddir = util.promisify(fs.readdir);
 const fsUnlink = util.promisify(fs.unlink);
@@ -47,6 +54,7 @@ async function deleteFilesInDir(directory) {
 module.exports.UserModel = UserModel;
 module.exports.AvatarService = AvatarService;
 module.exports.config = config;
+module.exports.logger = logger;
 
 module.exports.validUser = {
   username: 'Frank',
