@@ -6,9 +6,9 @@ const { expect } = chai;
 chai.use(chaiHttp);
 const helper = require('../../../helper');
 
-const { config, UserModel } = helper;
+const { config, UserModel, logger } = helper;
 
-const app = require('../../../../server/app')(config);
+const app = require('../../../../server/app')(config, logger);
 
 describe('The /users/registration route', () => {
   beforeEach(async () => helper.before());

@@ -6,9 +6,9 @@ const should = chai.should();
 const { expect } = chai;
 chai.use(chaiHttp);
 
-const { config } = helper;
+const { config, logger } = helper;
 
-const app = require('../../../../server/app')(config);
+const app = require('../../../../server/app')(config, logger);
 
 describe('The /users/login route', () => {
   beforeEach(async () => helper.before());
