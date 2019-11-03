@@ -21,7 +21,6 @@ module.exports = {
     },
     auth: {
       secret: process.env.DEV_SECRET
-      },
     },
     log: loggers.development
   },
@@ -42,7 +41,6 @@ module.exports = {
     },
     auth: {
       secret: process.env.PROD_SECRET
-      },
     },
     log: loggers.production
   },
@@ -63,7 +61,6 @@ module.exports = {
     },
     auth: {
       secret: process.env.TEST_SECRET
-      },
     },
     log: loggers.test
   },
