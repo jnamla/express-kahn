@@ -6,7 +6,7 @@ const { expect } = chai;
 chai.use(chaiHttp);
 const helper = require('../../../helper');
 
-const { config, logger, UserModel } = helper;
+const { config, UserModel, logger } = helper;
 
 const app = require('../../../../server/app')(config, logger);
 
