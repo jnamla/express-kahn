@@ -12,7 +12,7 @@ module.exports = {
       avatars: path.join(__dirname, '../data/avatars'),
     },
     database: {
-      dsn: process.env.DEVELOPMENT_DB_DSN,
+      dsn: process.env.DEV_DB_DSN,
       initOptions: {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -31,7 +31,7 @@ module.exports = {
       avatars: path.join(__dirname, '../data/avatars'),
     },
     database: {
-      dsn: process.env.PRODUCTION_DB_DSN,
+      dsn: process.env.PROD_DB_DSN,
       initOptions: {
         useNewUrlParser: true,
         useUnifiedTopology: true
